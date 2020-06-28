@@ -11,13 +11,6 @@ Vue.use(VueRouter);
 
 export default function (routes, base, appendTitle, authOptions) {
     appendTitle = appendTitle || ((a) => a);
-    authOptions = Object.assign({
-        tipMessage: '没有访问该页面的权限',
-        noLogin() {
-            window.location.href = '/';
-        },
-        redirect: '/',
-    }, authOptions);
     const router = new VueRouter({
         routes,
         base,
@@ -44,8 +37,19 @@ export default function (routes, base, appendTitle, authOptions) {
         router,
         autoHide: true,
     });
-    runAway(authOptions.domainName);
+
     // 权限验证
+    if (authOptions) {
+        authOptions = Object.assign({
+            tipMessage: '没有访问该页面的权限',
+            noLogin() {
+                window.location.href = '/';
+            },
+            redirect: '/',
+        }, authOptions);
+        runAway(authOptions.domainName);
+    }
+
     router.beforeEach((to, from, next) => {
         let called = false;
         const _next = function (...args) {
