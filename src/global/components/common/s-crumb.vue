@@ -55,10 +55,5 @@ export default {
             immediate: true,
         },
     },
-    created() {
-        this.$subscribe('custom.crumb', (value) => {
-            this.crumbs = value;
-        });
-    },
 };
 </script>
