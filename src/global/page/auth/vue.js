@@ -14,10 +14,6 @@ export default {
          */
         Vue.prototype.$auth = $auth;
 
-        // designer 环境直接放行认证和鉴权
-        if (process.env.VUE_APP_DESIGNER)
-            return;
-
         /**
          * - 组件权限项功能
          * - 自动隐藏路由组件功能
