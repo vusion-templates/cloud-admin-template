@@ -11,7 +11,7 @@ Vue.use(VueRouter);
 
 export default function (routes, base, appendTitle, authOptions) {
     appendTitle = appendTitle || ((a) => a);
-    if (authOptions) {
+    if (authOptions.needLogin) {
         runAhead(authOptions.domainName);
     }
     authOptions = Object.assign({
