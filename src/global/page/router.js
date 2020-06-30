@@ -11,16 +11,6 @@ Vue.use(VueRouter);
 
 export default function (routes, base, appendTitle, authOptions) {
     appendTitle = appendTitle || ((a) => a);
-    if (authOptions.needLogin) {
-        runAhead(authOptions.domainName);
-    }
-    authOptions = Object.assign({
-        tipMessage: '没有访问该页面的权限',
-        noLogin() {
-            window.location.href = '/';
-        },
-        redirect: '/',
-    }, authOptions);
     const router = new VueRouter({
         routes,
         base,
@@ -42,58 +32,75 @@ export default function (routes, base, appendTitle, authOptions) {
     // 自动传参
     router.beforeEach(routerLock.beforeEach);
     Vue.use(routerLock);
-    Vue.use(AuthPlugin, {
-        base,
-        router,
-        autoHide: true,
-    });
-    // 权限验证
-    router.beforeEach((to, from, next) => {
-        let called = false;
-        const _next = function (...args) {
-            if (called) {
-                return;
-            }
-            if (args && args.length) {
-                called = true;
-                next(...args);
-            }
-        };
-        let p = Promise.resolve();
-        to.matched.every((item) => {
-            if (item.meta && item.meta.auth) {
-                p = p.then(() => {
-                    if (called) {
-                        return Promise.reject();
-                    }
-                    let out;
-                    if (item.meta.auth === 'loginAuth') {
-                        out = loginAuth(to, from, _next, base + to.path, authOptions);
-                    } else {
-                        out = item.meta.auth(to, from, _next);
-                    }
-                    if (out && out.then) {
-                        return out;
-                    } else {
-                        return called ? Promise.reject() : Promise.resolve();
-                    }
-                });
-            }
-            return !called;
+
+    // designer 环境直接放行认证和鉴权
+    if (!process.env.VUE_APP_DESIGNER) {
+        if (authOptions.needLogin) {
+            routes[0].meta = routes[0].meta || {};
+            routes[0].meta.auth = 'loginAuth';
+            runAhead(authOptions.domainName);
+        }
+        authOptions = Object.assign({
+            tipMessage: '没有访问该页面的权限',
+            noLogin() {
+                window.location.href = '/';
+            },
+            redirect: '/',
+        }, authOptions);
+
+        Vue.use(AuthPlugin, {
+            base,
+            router,
+            autoHide: true,
         });
-        p.then(() => {
-            if (!called) {
-                called = true;
-                next();
-            }
-        }, () => {
-            if (!called) {
-                called = true;
-                console.error('router auth error');
-                next('/');
-            }
+        // 权限验证
+        router.beforeEach((to, from, next) => {
+            let called = false;
+            const _next = function (...args) {
+                if (called) {
+                    return;
+                }
+                if (args && args.length) {
+                    called = true;
+                    next(...args);
+                }
+            };
+            let p = Promise.resolve();
+            to.matched.every((item) => {
+                if (item.meta && item.meta.auth) {
+                    p = p.then(() => {
+                        if (called) {
+                            return Promise.reject();
+                        }
+                        let out;
+                        if (item.meta.auth === 'loginAuth') {
+                            out = loginAuth(to, from, _next, base + to.path, authOptions);
+                        } else {
+                            out = item.meta.auth(to, from, _next);
+                        }
+                        if (out && out.then) {
+                            return out;
+                        } else {
+                            return called ? Promise.reject() : Promise.resolve();
+                        }
+                    });
+                }
+                return !called;
+            });
+            p.then(() => {
+                if (!called) {
+                    called = true;
+                    next();
+                }
+            }, () => {
+                if (!called) {
+                    called = true;
+                    console.error('router auth error');
+                    next('/');
+                }
+            });
         });
-    });
+    }
 
     // 自动修改 title
     router.afterEach((to, from) => {
