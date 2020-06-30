@@ -36,7 +36,7 @@ export default function (routes, base, appendTitle, authOptions) {
 
     // designer 环境直接放行认证和鉴权
     if (!process.env.VUE_APP_DESIGNER) {
-        if (authOptions) {
+        if (authOptions.needLogin) {
             routes[0].meta = routes[0].meta || {};
             routes[0].meta.auth = 'loginAuth';
             runAhead(authOptions.domainName);
