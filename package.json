@@ -88,6 +88,7 @@
     "babel-polyfill": "^6.26.0",
     "cloud-ui.vusion": "^0.9.12",
     "date-fns": "^2.6.0",
+    "event-hooks-webpack-plugin": "^2.1.6",
     "i-material-design.vue": "^5.1.0",
     "lodash": "^4.17.15",
     "qs": "^6.8.0",
