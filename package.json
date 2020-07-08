@@ -4,7 +4,7 @@
   "version": "0.11.5",
   "scripts": {
     "cache-install": "npx cache-install",
-    "install": "vusion install",
+    "install": "npx vusion install",
     "dev": "vue-cli-service serve",
     "serve": "npm run dev",
     "build": "vue-cli-service build --apply-theme",

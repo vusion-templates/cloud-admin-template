@@ -21,7 +21,6 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
       - run: npm set prefix=/home/circleci/npm && echo 'export PATH=$HOME/circleci/npm/bin:$PATH' >> /home/circleci/.bashrc
-      - run: npm install -g vusion
       - run: npm install
 
       - save_cache:
