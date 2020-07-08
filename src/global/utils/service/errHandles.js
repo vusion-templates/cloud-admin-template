@@ -15,7 +15,7 @@ export default {
             UToast.show(err.msg || '系统繁忙');
         }
     },
-    localError(config, err) {
+    localError({ config }, err) {
         if (!config.noErrorTip) {
             UToast.show('客户端错误');
         }

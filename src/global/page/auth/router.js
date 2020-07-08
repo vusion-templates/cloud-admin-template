@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import auth from './index';
 export const loginAuth = function (to, from, next, currentPath, authOptions) {
-    auth.getUserInfo().then(() => {
+    return auth.getUserInfo().then(() => {
         auth.getUserResources(authOptions.domainName).then(() => {
             if (auth.has(currentPath))
                 next();
