@@ -33,26 +33,27 @@ export default function (routes, base, appendTitle, authOptions) {
     router.beforeEach(routerLock.beforeEach);
     Vue.use(routerLock);
 
-    // designer 环境直接放行认证和鉴权
-    if (!process.env.VUE_APP_DESIGNER) {
-        if (authOptions.needLogin) {
-            routes[0].meta = routes[0].meta || {};
-            routes[0].meta.auth = 'loginAuth';
-            runAhead(authOptions.domainName);
-        }
-        authOptions = Object.assign({
-            tipMessage: '没有访问该页面的权限',
-            noLogin() {
-                window.location.href = '/';
-            },
-            redirect: '/',
-        }, authOptions);
+    if (authOptions.needLogin) {
+        routes[0].meta = routes[0].meta || {};
+        routes[0].meta.auth = 'loginAuth';
+        runAhead(authOptions.domainName);
+    }
+    authOptions = Object.assign({
+        tipMessage: '没有访问该页面的权限',
+        noLogin() {
+            window.location.href = '/';
+        },
+        redirect: '/',
+    }, authOptions);
 
-        Vue.use(AuthPlugin, {
-            base,
-            router,
-            autoHide: true,
-        });
+    Vue.use(AuthPlugin, {
+        base,
+        router,
+        autoHide: true,
+    });
+
+    // designer 和 环境直接放行认证和鉴权
+    if (!(process.env.NODE_ENV === 'development' || process.env.VUE_APP_DESIGNER)) {
         // 权限验证
         router.beforeEach((to, from, next) => {
             let called = false;

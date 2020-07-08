@@ -18,6 +18,7 @@ yarn.lock
 
 # Dependency directories
 node_modules/
+vusion_packages/
 
 # Editors
 .vscode/
