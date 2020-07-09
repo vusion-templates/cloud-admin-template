@@ -3,7 +3,7 @@
   "description": "base on vue cloud-ui.vusion",
   "version": "0.12.3",
   "scripts": {
-    "cache-install": "npx cache-install && npx vusion-install",
+    "cache-install": "npx cache-install && node node_modules/vusion-install/index.js",
     "dev": "vue-cli-service serve",
     "serve": "npm run dev",
     "build": "vue-cli-service build --apply-theme",
