@@ -1,7 +1,7 @@
 {
   "name": "cloud-admin-template",
   "description": "base on vue cloud-ui.vusion",
-  "version": "0.12.1",
+  "version": "0.12.3",
   "scripts": {
     "cache-install": "npx cache-install",
     "install": "npm set unsafe-perm true && npx vusion-install",
