@@ -51,7 +51,7 @@ module.exports = function (port) {
                 onProxyReq,
             },
             '^/gw/': {
-                target: `http://${platformConfig.tenantId}-${platformConfig.projectId}.api.gateway.lowcode`,
+                target: `http://${platformConfig.tenantId}-${platformConfig.projectId}.gateway.lowcode`,
                 changeOrigin: true,
                 autoRewrite: true,
                 onProxyReq,
