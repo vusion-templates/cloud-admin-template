@@ -1,5 +1,18 @@
 import $auth from './index';
-import { hasSub } from './router';
+
+/**
+* 是否有当前路由下的子权限
+* 该方法只能在 Vue 中调用
+* @param {*} subPath 子权限路径，如 /createButton/enabled
+*/
+const hasSub = function (base, router) {
+    return function (subPath) {
+        const currentPath = base + router.currentRoute.path;
+        if (subPath[0] !== '/')
+            subPath = '/' + subPath;
+        return $auth.has(currentPath + subPath);
+    };
+};
 
 export default {
     install(Vue, options = {}) {

@@ -15,16 +15,3 @@ export const loginAuth = function (to, from, next, currentPath, authOptions) {
     });
 };
 
-/**
-* 是否有当前路由下的子权限
-* 该方法只能在 Vue 中调用
-* @param {*} subPath 子权限路径，如 /createButton/enabled
-*/
-export const hasSub = function (base, router) {
-    return function (subPath) {
-        const currentPath = base + router.currentRoute.path;
-        if (subPath[0] !== '/')
-            subPath = '/' + subPath;
-        return this.has(currentPath + subPath);
-    };
-};
