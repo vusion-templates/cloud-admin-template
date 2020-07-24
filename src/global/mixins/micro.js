@@ -1,4 +1,3 @@
-import micro from 'vusion-micro';
 export default {
     beforeRouteEnter(to, from, next) {
         const last = to.matched[to.matched.length - 1];
@@ -19,15 +18,6 @@ export default {
             });
         } else {
             next();
-        }
-    },
-    beforeRouteLeave(to, from, next) {
-        if (this.slaveName) {
-            micro.unloadApp(this.slaveName).then(() => {
-                next();
-            }, (e) => {
-                console.log(e);
-            });
         }
     },
 };

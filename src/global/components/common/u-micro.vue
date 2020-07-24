@@ -39,6 +39,7 @@ export default {
             prefix,
             nodeId,
             domReady: false,
+            destroying: false,
             defaultDom: `<div id="${nodeId}"></div>`,
             loading: true,
             configSingle: {},
@@ -64,6 +65,13 @@ export default {
     mounted() {
         this.domReady = true;
         this.start();
+    },
+    beforeDestroy() {
+        this.destroying = true;
+        micro.unloadApp(this.slaveName).catch((e) => {
+            console.log(e);
+            return Promise.reject(e);
+        });
     },
     methods: {
         loadEntries(entries) {
@@ -98,9 +106,11 @@ export default {
             if (!this.inited && this.done && this.domReady && !this.loading) {
                 this.inited = true;
                 this.$nextTick(() => {
-                    micro.start();
                     if (this.$route.query._m) {
                         this.$router.push(this.$route.query._m);
+                    }
+                    if (!this.destroying) {
+                        micro.start();
                     }
                 });
             }
