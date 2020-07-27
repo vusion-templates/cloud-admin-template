@@ -1,27 +1,22 @@
 import $auth from './index';
 
-/**
-* 是否有当前路由下的子权限
-* 该方法只能在 Vue 中调用
-* @param {*} subPath 子权限路径，如 /createButton/enabled
-*/
-const hasSub = function (base, router) {
-    return function (subPath) {
-        const currentPath = base + router.currentRoute.path;
-        if (subPath[0] !== '/')
-            subPath = '/' + subPath;
-        return $auth.has(currentPath + subPath);
-    };
-};
-
 export default {
     install(Vue, options = {}) {
         options.allowList = [].concat([], options.allowList);
 
         const router = options.router;
         const base = options.base.replace(/\/$/, '');
-
-        $auth.hasSub = hasSub(base, router);
+        /**
+        * 是否有当前路由下的子权限
+        * 该方法只能在 Vue 中调用
+        * @param {*} subPath 子权限路径，如 /createButton/enabled
+        */
+        $auth.hasSub = function (subPath) {
+            const currentPath = base + router.currentRoute.path;
+            if (subPath[0] !== '/')
+                subPath = '/' + subPath;
+            return this.has(currentPath + subPath);
+        };
         /**
          * 账号与权限中心
          */

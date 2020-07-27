@@ -1,4 +1,8 @@
+import UMicro from './u-micro.vue';
 export default {
+    components: {
+        UMicro,
+    },
     beforeRouteEnter(to, from, next) {
         const last = to.matched[to.matched.length - 1];
         const prefix = last.path.replace('**', '').replace(/\/$/, '');

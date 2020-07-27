@@ -1,4 +1,4 @@
-import services from './index';
+import services from '../../services';
 
 export default {
     install(Vue, options = {}) {

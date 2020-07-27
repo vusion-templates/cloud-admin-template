@@ -1,4 +1,4 @@
-import { createService } from '@/global/utils/service';
+import { createService } from '@/global/features/service/create';
 import api from './api';
 import apiConfig from './api.config';
 import merge from 'lodash/merge';

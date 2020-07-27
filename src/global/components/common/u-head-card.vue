@@ -1,11 +1,13 @@
 <template>
     <div :class="$style.head" :size="headSize">
-        <div :class="$style.logo" :size="headSize">
-            <slot name="logo" v-if="$slots.logo"></slot>
-            <template v-else>
-                {{ (title || '').substring(0, 2).toUpperCase() }}
-            </template>
-        </div>
+        <slot name="logoBox">
+            <div :class="$style.logo" :size="headSize">
+                <slot name="logo" v-if="$slots.logo"></slot>
+                <template v-else>
+                    {{ (title || '').substring(0, 2).toUpperCase() }}
+                </template>
+            </div>
+        </slot>
         <div :class="$style.main" :size="headSize">
             <div :class="$style.tit">
                 <slot name="title">
@@ -14,7 +16,7 @@
             </div>
             <div :class="$style.info">
                 <slot name="info">
-                    <ul v-if="infos && infos.length">
+                    <ul v-if="infos && infos.length" style="padding-left:0">
                         <li v-for="(info, index) in infos" :key="index">
                             <label>{{ info.title }}:</label> {{ info.value }}
                         </li>

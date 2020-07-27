@@ -8,7 +8,7 @@ const formatContentType = function (contentType, data) {
             return stringify(data);
         },
     };
-    return map[contentType] && map[contentType](data) || data;
+    return map[contentType] ? map[contentType](data) : data;
 };
 const requester = function (requestInfo) {
     const { url, config = {} } = requestInfo;

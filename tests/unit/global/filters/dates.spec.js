@@ -1,4 +1,4 @@
-import Dates from '@/global/filters/dates';
+import Dates from '@/global/features/common/filters/dates';
 
 describe('global/filters/dates', () => {
     test('dateFormat', () => {

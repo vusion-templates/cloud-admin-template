@@ -16,11 +16,6 @@ export default {
             crumbs: [],
         };
     },
-    subscribe: {
-        'custom.crumb'(crumb) {
-            this.crumbs = crumb;
-        },
-    },
     watch: {
         $route: {
             handler(to, from) {
@@ -28,7 +23,7 @@ export default {
                     const matched = to.matched || [];
                     const crumbs = [];
                     matched.forEach((route) => {
-                        let crumb = route.meta && route.meta.crumb;
+                        let crumb = route.components.default.meta?.crumb || route.meta?.crumb;
                         if (crumb) {
                             if (isFunction(crumb))
                                 crumb = crumb(route, to, from);
@@ -54,6 +49,11 @@ export default {
             },
             immediate: true,
         },
+    },
+    created() {
+        this.$subscribe('custom.crumb', (value) => {
+            this.crumbs = typeof value === 'function' ? value(this.crumbs) : value;
+        });
     },
 };
 </script>

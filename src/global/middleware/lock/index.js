@@ -1,11 +1,13 @@
-const routerLock = {
-    beforeEach(to, from, next) {
+import { getComponentOption } from '../util';
+export default function (appConfig) {
+    return function ({ to, from, next, appConfig }) {
         const matched = to.matched || [];
         const locks = [];
         matched.forEach((item) => {
-            if (item.meta && item.meta.locks) {
-                const itemLocks = item.meta.locks;
-                itemLocks.forEach((lock) => {
+            const componentOptions = getComponentOption(item);
+            const metaLocks = componentOptions?.meta?.locks || item.meta?.locks;
+            if (metaLocks) {
+                metaLocks.forEach((lock) => {
                     if (lock.params && lock.params.length) {
                         locks.push(lock);
                     }
@@ -14,7 +16,7 @@ const routerLock = {
         });
         if (!locks.length) {
             next();
-            return;
+            return Promise.resolve();
         }
         const includePath = function (path) {
             if (typeof path === 'string') {
@@ -30,7 +32,7 @@ const routerLock = {
         const toQuery = to.query;
         let isChanged = false;
         locks.forEach((lock) => {
-            // 没有 include 时全通过，当前 to.path 必须是匹配收集到的每个 lock 的
+        // 没有 include 时全通过，当前 to.path 必须是匹配收集到的每个 lock 的
             if (lock.include && !lock.include.some(includePath))
                 return;
             if (lock.exclude && lock.exclude.some(includePath))
@@ -51,25 +53,10 @@ const routerLock = {
                 path: to.path,
                 query: toQuery,
             });
+            return Promise.reject();
         } else {
             next();
+            return Promise.resolve();
         }
-    },
-    update(query, route, router) {
-        if (Object.keys(query).some((key) => query[key] !== route.query[key])) {
-            router.push({
-                path: route.path,
-                query: {
-                    ...route.query,
-                    ...query,
-                },
-            });
-        }
-    },
-    install(Vue) {
-        Vue.prototype.$routerLock = function (query) {
-            return routerLock.update(query, this.$route, this.$router);
-        };
-    },
-};
-export default routerLock;
+    };
+}

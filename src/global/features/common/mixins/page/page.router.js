@@ -1,5 +1,5 @@
 import Page from './page';
-import localStorage from '@/global/utils/storage/localStorage';
+import localStorage from '@/global/features/utils/storage/localStorage';
 export default {
     extends: Page,
     watch: {
