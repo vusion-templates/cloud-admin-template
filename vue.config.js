@@ -64,7 +64,7 @@ const vueConfig = {
         }
         webpackStyle.chain(config);
         webpackRoutes.chain(config);
-        config.output.jsonpFunction('webpackJsonp' + pkg.name);
+        config.output.jsonpFunction('webpackJsonp' + pkg.name + (isMicro ? Object.keys(pages)[0] : ''));
 
         config.module.rule('js').uses.delete('cache-loader');
     },
