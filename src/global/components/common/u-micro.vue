@@ -39,10 +39,15 @@ export default {
             prefix,
             nodeId,
             domReady: false,
-            destroying: false,
             defaultDom: `<div id="${nodeId}"></div>`,
             loading: true,
-            configSingle: {},
+            configSingle: {
+                customProps: {
+                    appInfo: {
+                        alive: true,
+                    },
+                },
+            },
         };
     },
     watch: {
@@ -67,11 +72,13 @@ export default {
         this.start();
     },
     beforeDestroy() {
-        this.destroying = true;
-        micro.unloadApp(this.slaveName).catch((e) => {
-            console.log(e);
-            return Promise.reject(e);
-        });
+        this.configSingle.customProps.appInfo.alive = false;
+        if (this.slaveName) {
+            micro.unloadApp(this.slaveName).catch((e) => {
+                console.log(e);
+                return Promise.reject(e);
+            });
+        }
     },
     methods: {
         loadEntries(entries) {
@@ -109,7 +116,7 @@ export default {
                     if (this.$route.query._m) {
                         this.$router.push(this.$route.query._m);
                     }
-                    if (!this.destroying) {
+                    if (this.configSingle.customProps.appInfo.alive) {
                         micro.start();
                     }
                 });
