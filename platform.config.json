@@ -1,4 +1,5 @@
 {
     "tenantId": "test",
-    "projectId": "test"
+    "projectId": "test",
+    "tenant": "test"
 }
