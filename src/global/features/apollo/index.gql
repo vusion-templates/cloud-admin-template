@@ -1,0 +1,8 @@
+type Query {
+	queryAll: User
+}
+
+type User {
+	name: String
+	value: String
+}
