@@ -139,5 +139,8 @@
     ],
     "team": "网易云计算前端",
     "access": "public"
+  },
+  "vusionDependencies": {
+    "@cloud-ui/u-you-data": "^0.1.4"
   }
 }
