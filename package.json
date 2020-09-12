@@ -1,7 +1,7 @@
 {
   "name": "cloud-admin-template",
   "description": "base on vue cloud-ui.vusion",
-  "version": "0.13.4",
+  "version": "0.13.5",
   "scripts": {
     "cache-install": "npx cache-install && node node_modules/vusion-install/index.js",
     "dev": "vue-cli-service serve",
@@ -76,7 +76,7 @@
     "shx": "^0.3.2",
     "underscore-template-loader": "^1.0.0",
     "vue-cli-plugin-cloud-admin": "^0.1.3",
-    "vue-cli-plugin-vusion": "^0.12.0",
+    "vue-cli-plugin-vusion": "^0.12.1",
     "vusion-install": "^0.12.8",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9",
