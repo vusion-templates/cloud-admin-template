@@ -9,11 +9,11 @@ let apollo;
 export function apolloProvider() {
     apollo = new VueApollo({
         clients: {
-          a: apolloClient,
+            a: apolloClient,
         },
         defaultClient: apolloClient,
         defaultOptions: {
-            // $loadingKey: 'loading',
+            $loadingKey: 'loading',
         },
         watchLoading(state, mod) {
             // loading += mod
