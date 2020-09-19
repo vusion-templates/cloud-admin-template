@@ -30,6 +30,7 @@ const webpackDll = require('./webpack/dll');
 const webpackStyle = require('./webpack/style');
 const webpackRoutes = require('./webpack/routes');
 const webpackHtml = require('./webpack/html');
+const webpackGQL = require('./webpack/gqloader');
 const webpackOptimization = require('./webpack/optimization');
 
 if (isMicro) {
@@ -64,6 +65,7 @@ const vueConfig = {
         }
         webpackStyle.chain(config);
         webpackRoutes.chain(config);
+        webpackGQL.chain(config);
         config.output.jsonpFunction('webpackJsonp' + pkg.name + (isMicro ? Object.keys(pages)[0] : ''));
 
         config.module.rule('js').uses.delete('cache-loader');
