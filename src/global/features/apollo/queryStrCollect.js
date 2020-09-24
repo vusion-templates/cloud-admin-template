@@ -7,20 +7,37 @@ export default {
         Object.defineProperty(Vue.prototype, '$graphql', {
             get() {
                 return {
-                    query: (serviceName, queryKey, variables) => {
-                        const key = serviceName + '_' + queryKey;
+                    query: (schemaRef, resolverName, variables) => {
+                        const arr = schemaRef.split('/');
+                        arr.shift();
+                        arr.pop();
+                        const key = arr.join('_') + '_' + resolverName;
+                        const newVariables = {};
+                        Object.keys(variables || {}).forEach((key) => {
+                            newVariables[`Query__${resolverName}__${key}`] = variables[key];
+                        });
+
                         return this.$apollo.query({
                             query: graph[key],
-                            variables,
-                        }).then((res) => res.data[key]);
+                            variables: newVariables,
+                        }).then((res) => {
+                            console.log(res);
+                            return res.data[key];
+                        });
                     },
-                    mutation: (serviceName, queryKey, variables) => {
-                        const key = serviceName + '_' + queryKey;
+                    mutation: (schemaRef, resolverName, variables) => {
+                        const arr = schemaRef.split('/');
+                        arr.shift();
+                        arr.pop();
+                        const key = arr.join('_') + '_' + resolverName;
+                        const newVariables = {};
+                        Object.keys(variables || {}).forEach((key) => {
+                            newVariables[`Mutation__${resolverName}__${key}`] = variables[key];
+                        });
+
                         return this.$apollo.mutate({
                             mutation: graph[key],
-                            variables: {
-                                [`Mutation__${queryKey}__body`]: variables,
-                            },
+                            variables: newVariables,
                         }).then((res) => res.data[key]);
                     },
                 }
