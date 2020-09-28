@@ -146,7 +146,6 @@
     "access": "public"
   },
   "vusionDependencies": {
-    "@cloud-ui/u-you-data": "0.1.8",
     "s-login.vue": "^0.3.2"
   },
   "ui": {
