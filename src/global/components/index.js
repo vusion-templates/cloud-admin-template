@@ -6,3 +6,4 @@ export { default as SSidebar } from './common/s-sidebar.vue';
 export { default as SNavbar } from './common/s-navbar.vue';
 export { default as SLogo } from './common/s-logo.vue';
 export * from '@cloud-ui/u-you-data';
+export * from 's-login.vue';

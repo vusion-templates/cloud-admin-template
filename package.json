@@ -57,7 +57,7 @@
     "babel-eslint": "^10.1.0",
     "babel-jest": "^23.6.0",
     "chalk": "^3.0.0",
-    "cloud-admin-template-sdk": "^0.3.12",
+    "cloud-admin-template-sdk": "^0.3.15",
     "copy-webpack-plugin": "^5.0.4",
     "core-js": "^3.6.5",
     "cross-env": "^7.0.2",
@@ -76,7 +76,7 @@
     "shx": "^0.3.2",
     "underscore-template-loader": "^1.0.0",
     "vue-cli-plugin-cloud-admin": "^0.1.3",
-    "vue-cli-plugin-vusion": "0.12.9",
+    "vue-cli-plugin-vusion": "0.12.13",
     "vusion-install": "^0.12.8",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9",
@@ -89,7 +89,7 @@
     "apollo-link-schema": "^1.2.5",
     "axios": "^0.19.0",
     "babel-polyfill": "^6.26.0",
-    "cloud-ui.vusion": "0.11.4",
+    "cloud-ui.vusion": "0.11.5",
     "date-fns": "^2.6.0",
     "event-hooks-webpack-plugin": "^2.1.6",
     "graphql-tools": "^6.2.1",
@@ -146,10 +146,11 @@
     "access": "public"
   },
   "vusionDependencies": {
-    "@cloud-ui/u-you-data": "0.1.8"
+    "@cloud-ui/u-you-data": "0.1.8",
+    "s-login.vue": "^0.3.2"
   },
   "ui": {
     "name": "cloud-ui.vusion",
-    "version": "0.11.4"
+    "version": "0.11.5"
   }
 }
