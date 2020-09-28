@@ -146,7 +146,7 @@
     "access": "public"
   },
   "vusionDependencies": {
-    "s-login.vue": "^0.3.2"
+    "lcap-login": "^0.3.3"
   },
   "ui": {
     "name": "cloud-ui.vusion",
