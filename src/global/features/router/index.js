@@ -7,7 +7,7 @@ import { beforeMiddleware, afterMiddleware } from './middleware';
 
 Vue.use(VueRouter);
 
-Vue.prototype.$destination = function(url) {
+Vue.prototype.$destination = function (url) {
     if (url.startsWith('http'))
         location.href = url;
     else {
@@ -16,7 +16,7 @@ Vue.prototype.$destination = function(url) {
         else {
             const oldPath = location.pathname.split('/');
             if (url.startsWith('/' + (oldPath[1] || '')))
-                this.$router.push(url);
+                this.$router.push(url.replace('/' + (oldPath[1] || ''), ''));
             else
                 location.href = url;
         }
