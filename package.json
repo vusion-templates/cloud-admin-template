@@ -99,11 +99,11 @@
     "qs": "^6.8.0",
     "request-pre": "^0.4.3",
     "uuid": "^7.0.3",
-    "vue": "^2.6.10",
+    "vue": "^2.6.12",
     "vue-apollo": "^3.0.4",
     "vue-i18n": "^8.14.0",
     "vue-router": "^3.1.2",
-    "vue-template-compiler": "^2.6.10",
+    "vue-template-compiler": "^2.6.12",
     "vusion-micro": "^0.2.4",
     "vusion-micro-app": "^0.4.2"
   },
