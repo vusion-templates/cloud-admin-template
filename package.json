@@ -57,7 +57,7 @@
     "babel-eslint": "^10.1.0",
     "babel-jest": "^23.6.0",
     "chalk": "^3.0.0",
-    "cloud-admin-template-sdk": "^0.3.15",
+    "cloud-admin-template-sdk": "^0.4.0",
     "copy-webpack-plugin": "^5.0.4",
     "core-js": "^3.6.5",
     "cross-env": "^7.0.2",
@@ -89,7 +89,7 @@
     "apollo-link-schema": "^1.2.5",
     "axios": "^0.19.0",
     "babel-polyfill": "^6.26.0",
-    "cloud-ui.vusion": "0.11.5",
+    "cloud-ui.vusion": "0.11.6",
     "date-fns": "^2.6.0",
     "event-hooks-webpack-plugin": "^2.1.6",
     "graphql-tools": "^6.2.1",
@@ -146,10 +146,10 @@
     "access": "public"
   },
   "vusionDependencies": {
-    "lcap-login": "0.3.3"
+    "lcap-login": "^0.3.3"
   },
   "ui": {
     "name": "cloud-ui.vusion",
-    "version": "0.11.5"
+    "version": "0.11.6"
   }
 }
