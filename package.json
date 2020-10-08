@@ -1,12 +1,13 @@
 {
   "name": "cloud-admin-template",
   "description": "base on vue cloud-ui.vusion",
-  "version": "0.13.15",
+  "version": "0.14.1",
   "scripts": {
     "cache-install": "npx cache-install && node node_modules/vusion-install/index.js",
     "dev": "vue-cli-service serve",
     "serve": "npm run dev",
     "build": "vue-cli-service build --apply-theme",
+    "build:designer": "vue-cli-service build --target lib --mode designer --inline-vue --name cloudAdminDesigner src/global/features/designer/index.js",
     "build:stage": "vue-cli-service build --mode staging",
     "build:site": "vue-cli-service build  --apply-theme --mode site",
     "lint": "npx eslint --quiet",
@@ -16,7 +17,7 @@
     "test:unit:watch": "npm run test:unit -- --watch",
     "ui": "npx vue ui",
     "manage": "plop",
-    "prepublishOnly": "cp .gitignore _.gitignore",
+    "prepublishOnly": "cp .gitignore _.gitignore && npm run build:designer",
     "postpublish": "rm _.gitignore",
     "screenshot": "vusion screenshot --server public/index.html -o screenshots/0.png -w 1440 -h 900 && vusion screenshot --server public/index.html#/demo/list/basic -o screenshots/1.png -w 1440 -h 900 -d 200"
   },
