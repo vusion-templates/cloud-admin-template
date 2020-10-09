@@ -15,7 +15,9 @@ const schema = makeExecutableSchema({
 // define our apolloclient
 export const apolloClient = new ApolloClient({
     link: new SchemaLink({ schema }),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+        addTypename: false, // 会破坏 get -> update，暂时先关闭
+    }),
     defaultOptions: {
         query: {
             fetchPolicy: 'network-only', // 获取最新的请求数据
