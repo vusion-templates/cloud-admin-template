@@ -1,4 +1,8 @@
+
+import gql from 'graphql-tag';
+
 export const utils = {
+    gql,
     tryJSONParse(str) {
         let result;
 

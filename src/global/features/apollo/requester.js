@@ -9,9 +9,8 @@ const formatContentType = function (contentType, data) {
     return map[contentType] ? map[contentType](data) : data;
 };
 
-const requester = function (requestInfo) {
-    const { url, config = {} } = requestInfo;
-    const { path, method, body = {}, headers = {}, query = {} } = url;
+const requester = function (path, config) {
+    const { method, body = {}, headers = {}, query = {} } = config;
     const baseURL = config.baseURL ? config.baseURL : '';
     headers['Content-Type'] = headers['Content-Type'] || 'application/json';
     const req = axios({
