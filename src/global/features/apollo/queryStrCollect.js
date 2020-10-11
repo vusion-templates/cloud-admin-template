@@ -14,14 +14,13 @@ export default {
         Object.defineProperty(Vue.prototype, '$graphql', {
             get() {
                 return {
-                    query: (schemaRef, resolverName, graphqlClient, variables) => {
+                    query: (schemaRef, operationName, graphqlClient, variables) => {
                         const arr = schemaRef.split('/');
                         arr.shift();
                         arr.pop();
-                        const longKey = arr.join('_') + '_' + resolverName;
                         const newVariables = {};
                         Object.keys(variables || {}).forEach((key) => {
-                            newVariables[`Query__${longKey}__${key}`] = variables[key];
+                            newVariables[`Query__${operationName}__${key}`] = variables[key];
                         });
 
                         return this.$apollo.query({
@@ -32,17 +31,16 @@ export default {
                             },
                         }).then((res) => {
                             console.log(res);
-                            return res.data && res.data[longKey];
+                            return res.data && res.data[operationName];
                         });
                     },
-                    mutation: (schemaRef, resolverName, graphqlClient, variables) => {
+                    mutation: (schemaRef, operationName, graphqlClient, variables) => {
                         const arr = schemaRef.split('/');
                         arr.shift();
                         arr.pop();
-                        const longKey = arr.join('_') + '_' + resolverName;
                         const newVariables = {};
                         Object.keys(variables || {}).forEach((key) => {
-                            newVariables[`Mutation__${longKey}__${key}`] = variables[key];
+                            newVariables[`Mutation__${operationName}__${key}`] = variables[key];
                         });
 
                         return this.$apollo.mutate({
@@ -51,7 +49,7 @@ export default {
                             context: {
                                 uri: getUriValue(schemaRef),
                             },
-                        }).then((res) => res.data[longKey]);
+                        }).then((res) => res.data[operationName]);
                     },
                 };
             },
