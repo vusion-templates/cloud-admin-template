@@ -1,20 +1,17 @@
-
-import { makeExecutableSchema } from '@graphql-tools/schema';
 // Setup Apollo client as usual, but use SchemaLink
-import { SchemaLink } from 'apollo-link-schema';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import ApolloClient from 'apollo-client';
-import typeDefs from '../../apollo/schema.gql';
-import { resolvers } from '../../apollo/resolver';
+import { createHttpLink } from 'apollo-link-http';
 
-const schema = makeExecutableSchema({
-    typeDefs,
-    resolvers,
+const link = createHttpLink({
+    fetchOptions: {
+        method: 'POST',
+    },
 });
 
 // define our apolloclient
 export const apolloClient = new ApolloClient({
-    link: new SchemaLink({ schema }),
+    link,
     cache: new InMemoryCache({
         addTypename: false, // 会破坏 get -> update，暂时先关闭
     }),
