@@ -16,7 +16,8 @@ const requester = function (requestInfo) {
     const baseURL = config.baseURL ? config.baseURL : '';
     headers['Content-Type'] = headers['Content-Type'] || 'application/json';
     if (config.download) {
-        window.location.href = path;
+        const fullPath = `${path}?${stringify(query)}`;
+        window.location.href = fullPath;
         return Promise.resolve({
             data: {
                 code: 200,
