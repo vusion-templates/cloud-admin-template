@@ -15,6 +15,14 @@ const requester = function (requestInfo) {
     const { path, method, body = {}, headers = {}, query = {} } = url;
     const baseURL = config.baseURL ? config.baseURL : '';
     headers['Content-Type'] = headers['Content-Type'] || 'application/json';
+    if (config.download) {
+        window.location.href = path;
+        return Promise.resolve({
+            data: {
+                code: 200,
+            }
+        });
+    }
     const req = axios({
         params: query,
         baseURL,
@@ -40,5 +48,6 @@ export const createService = function createService(apiSchemaList, serviceConfig
         shortResponse: true,
     });
     serviceConfig = fixServiceConfig;
+    
     return service.generator(apiSchemaList, dynamicServices, serviceConfig);
 };
