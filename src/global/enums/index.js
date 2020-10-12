@@ -13,8 +13,9 @@ function createEnum(items) {
 const map = {};
 Object.keys(enums).forEach((key) => {
     Object.keys(enums[key]).forEach((enumKey) => {
-        Object.assign(map, enums[key][enumKey]);
+        map[enumKey] = map[enumKey] || {};
+        map[enumKey] = createEnum(enums[key][enumKey]);
     });
 });
 
-export default createEnum(map);
+export default map;
