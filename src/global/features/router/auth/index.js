@@ -26,7 +26,10 @@ const auth = {
                 throw e;
             });
         }
-        return userInfoPromise;
+        return userInfoPromise.then((userInfo) => {
+            this.$global.userInfo = userInfo;
+            return userInfo;
+        });
     },
     getUserResources(DomainName) {
         if (!userResourcesPromise) {
