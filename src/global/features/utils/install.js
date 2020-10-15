@@ -1,8 +1,19 @@
 import gql from 'graphql-tag';
 import cloneDeep from 'lodash/cloneDeep';
+import enums from '../../enums';
 
 export const utils = {
     gql,
+    Enum(key, value) {
+        if (arguments.length === 0)
+            return '';
+        else if (arguments.length === 1)
+            return enums[key];
+        else if (enums[key])
+            return enums[key](value);
+        else
+            return '';
+    },
     Split(str, seperator) {
         return str.split(seperator);
     },
