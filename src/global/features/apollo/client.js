@@ -1,6 +1,7 @@
 // Setup Apollo client as usual, but use SchemaLink
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import ApolloClient from 'apollo-client';
+import { buildAxiosFetch } from 'axios-fetch';
 import { createHttpLink } from 'apollo-link-http';
 import axios from 'axios';
 
@@ -16,6 +17,7 @@ const formatContentType = function (contentType, data) {
 const requester = function (chosenURI, options) {
     const { headers = {}, params, baseURL = '', method = 'POST', body = {}} = options;
     headers['Content-Type'] = headers['Content-Type'] || 'application/json';
+    console.info('request', options);
     const req = axios({
         params,
         baseURL,
@@ -27,7 +29,7 @@ const requester = function (chosenURI, options) {
         xsrfCookieName: 'csrfToken',
         xsrfHeaderName: 'x-csrf-token',
     });
-    return req;
+    return buildAxiosFetch(req);
 };
 
 const link = createHttpLink({
@@ -36,7 +38,6 @@ const link = createHttpLink({
     },
     fetch: requester
 });
-
 // define our apolloclient
 export const apolloClient = new ApolloClient({
     link,
