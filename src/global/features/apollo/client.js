@@ -3,6 +3,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import ApolloClient from 'apollo-client';
 import { buildAxiosFetch } from 'axios-fetch';
 import { createHttpLink } from 'apollo-link-http';
+
 import axios from 'axios';
 
 const formatContentType = function (contentType, data) {
@@ -14,30 +15,45 @@ const formatContentType = function (contentType, data) {
     return map[contentType] ? map[contentType](data) : data;
 };
 
-const requester = function (chosenURI, options) {
-    const { headers = {}, params, baseURL = '', method = 'POST', body = {}} = options;
+const requester = async function (url, options) {
+    const { headers = {}, params, baseURL = '', method = 'POST', body = {} } = options;
     headers['Content-Type'] = headers['Content-Type'] || 'application/json';
     console.info('request', options);
-    const req = axios({
+
+    const result = await axios({
         params,
         baseURL,
         method,
-        url: chosenURI,
+        url,
         data: formatContentType(headers['Content-Type'], body),
         headers,
         withCredentials: !baseURL,
         xsrfCookieName: 'csrfToken',
         xsrfHeaderName: 'x-csrf-token',
     });
-    return buildAxiosFetch(req);
+
+    // Convert the Axios style response into a `fetch` style response
+    const responseBody = typeof result.data === `object` ? JSON.stringify(result.data) : result.data;
+
+    const resHeaders = new Headers();
+    Object.entries(result.headers).forEach(([key, value]) => {
+        resHeaders.append(key, value);
+    });
+
+    return new Response(responseBody, {
+        status: result.status,
+        statusText: result.statusText,
+        headers: resHeaders,
+    });
 };
 
 const link = createHttpLink({
     fetchOptions: {
-        method: 'POST'
+        method: 'POST',
     },
-    fetch: requester
+    fetch: requester,
 });
+
 // define our apolloclient
 export const apolloClient = new ApolloClient({
     link,
