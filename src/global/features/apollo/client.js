@@ -1,7 +1,6 @@
 // Setup Apollo client as usual, but use SchemaLink
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import ApolloClient from 'apollo-client';
-import { buildAxiosFetch } from 'axios-fetch';
 import { createHttpLink } from 'apollo-link-http';
 
 import axios from 'axios';
