@@ -14,6 +14,19 @@ export const utils = {
         else
             return '';
     },
+    EnumValue(enumName, value) {
+        return value;
+    },
+    EnumLabel(enumName, value) {
+        if (arguments.length === 0)
+            return '';
+        else if (arguments.length === 1)
+            return enums[enumName];
+        else if (enums[enumName])
+            return enums[enumName](value);
+        else
+            return '';
+    },
     Split(str, seperator) {
         return str.split(seperator);
     },
