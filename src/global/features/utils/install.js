@@ -5,14 +5,7 @@ import enums from '../../enums';
 export const utils = {
     gql,
     Enum(enumName, value) {
-        if (arguments.length === 0)
-            return '';
-        else if (arguments.length === 1)
-            return enums[enumName];
-        else if (enums[enumName])
-            return enums[enumName](value);
-        else
-            return '';
+        return this.EnumLabel(enumName, value);
     },
     EnumValue(enumName, value) {
         return value;
