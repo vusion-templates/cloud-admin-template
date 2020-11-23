@@ -1,8 +1,7 @@
 import enums from '../../enums';
-import dataTypes from '../../dataTypes';
+import dataTypesForSchema from '../../dataTypes';
 import generate from '@babel/generator';
 import { genInitData } from './tools';
-import { parse, stringify } from './circularJSON';
 
 export default {
     install(Vue, options = {}) {
@@ -12,7 +11,8 @@ export default {
 
         // read datatypes from template, then parse schema
         Vue.prototype.$transforSchemaWithDataTypes = (schema) => {
-            const dataTypesMap = parse(stringify(dataTypes))['dataTypesMap']; // TODO 统一为  dataTypesMap
+            // read from file
+            const dataTypesMap = dataTypesForSchema || {}; // TODO 统一为  dataTypesMap
             const expressDataTypeObject = genInitData(schema || {}, dataTypesMap);
             const expression = generate(expressDataTypeObject).code;
             console.info('expression', expression);
