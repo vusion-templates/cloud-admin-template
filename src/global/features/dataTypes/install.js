@@ -6,10 +6,10 @@ export default {
         Vue.prototype.$global = {
             userInfo: {},
             requestFullscreen() {
-                document.body.requestFullscreen();
+                return document.body.requestFullscreen();
             },
             exitFullscreen() {
-                document.exitFullscreen();
+                return document.exitFullscreen();
             },
             hasAuth(authPath) {
                 return auth.has(authPath);
