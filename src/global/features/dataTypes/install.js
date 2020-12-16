@@ -20,7 +20,7 @@ export default {
         };
 
         // read datatypes from template, then parse schema
-        Vue.prototype.$transforSchemaWithDataTypes = (schema) => {
+        Vue.prototype.$genInitFromSchema = (schema) => {
             // read from file
             const dataTypesMap = dataTypesForSchema || {}; // TODO 统一为  dataTypesMap
             const expressDataTypeObject = genInitData(schema || {}, dataTypesMap);
