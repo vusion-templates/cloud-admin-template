@@ -23,16 +23,14 @@ function download(url) {
     const { path, method, body = {}, headers = {}, query = {} } = url;
 
     return axios({
-      url: path,
-      method,
-      params: query,
-      data: formatContentType(headers['Content-Type'], body),
-      responseType: 'blob'
+        url: path,
+        method,
+        params: query,
+        data: formatContentType(headers['Content-Type'], body),
+        responseType: 'blob',
     }).then((res) => {
         // 包含 content-disposition， 从中解析名字，不包含 content-disposition 的获取请求地址的后缀
-        const effectiveFileName = res.request.getAllResponseHeaders().includes('content-disposition') 
-            ? getFilenameFromContentDispositionHeader(res.request.getResponseHeader('content-disposition')) 
-            : res.request.responseURL.split('/').pop();
+        const effectiveFileName = res.request.getAllResponseHeaders().includes('content-disposition') ? getFilenameFromContentDispositionHeader(res.request.getResponseHeader('content-disposition')) : res.request.responseURL.split('/').pop();
         const { data, status, statusText } = res;
         const downloadUrl = window.URL.createObjectURL(new Blob([data]));
         const link = document.createElement('a');
@@ -44,19 +42,18 @@ function download(url) {
         return Promise.resolve({
             data: {
                 code: status,
-                msg: statusText
-            }
+                msg: statusText,
+            },
         });
     }).catch((err) => {
         // 基于 AxiosError 的错误类型 https://github.com/axios/axios/blob/b7e954eba3911874575ed241ec2ec38ff8af21bb/index.d.ts#L85
         return Promise.resolve({
             data: {
                 code: err.code,
-                msg: err.response.statusText
-            }
+                msg: err.response.statusText,
+            },
         });
     });
-  
 }
 
 const requester = function (requestInfo) {
@@ -93,6 +90,6 @@ export const createService = function createService(apiSchemaList, serviceConfig
         shortResponse: true,
     });
     serviceConfig = fixServiceConfig;
-    
+
     return service.generator(apiSchemaList, dynamicServices, serviceConfig);
 };
