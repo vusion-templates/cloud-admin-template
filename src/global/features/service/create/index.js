@@ -64,13 +64,17 @@ const requester = function (requestInfo) {
     if (config.download) {
         return download(url);
     }
-
+    let data;
+    const method2 = method.toUpperCase();
+    if (Object.keys(body).length || ['PUT', 'POST', 'PATCH'].includes(method2)) {
+        data = formatContentType(headers['Content-Type'], body);
+    }
     const req = axios({
         params: query,
         baseURL,
-        method,
+        method: method2,
         url: path,
-        data: formatContentType(headers['Content-Type'], body),
+        data,
         headers,
         withCredentials: !baseURL,
         xsrfCookieName: 'csrfToken',
