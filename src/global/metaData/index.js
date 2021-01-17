@@ -7,7 +7,7 @@ let dataTypesMap = {};
     function importAll(r) {
         r.keys().forEach((key) => dataTypesMap = r(key));
     }
-    importAll(require.context('../dataTypes', true, /\/dataTypes.json$/));
+    importAll(require.context('../dataTypes/', true, /\/dataTypes.json$/));
 }
 
 const enums = {};
@@ -30,4 +30,29 @@ const enumsMap = {};
     });
 }
 
-export default { dataTypesMap, enumsMap };
+const servicesMap = {};
+{
+    function importAll(r) {
+        r.keys().forEach((key) => {
+            const serviceFileContent = r(key);
+            const moduleServiceName = key.replace('./', '').replace('api.json', '').split('/');
+            if (moduleServiceName.length > 1) {
+                const last = moduleServiceName.pop();
+                if (last !== 'index') {
+                    moduleServiceName.push(last);
+                }
+            }
+            const namespace = moduleServiceName.reduce((pre, current) => {
+                if (pre) {
+                    current = current.replace(/^[a-z]/, (s) => s.toUpperCase()).replace(/-([a-z])/g, (a, s) => s.toUpperCase());
+                }
+                return pre + current;
+            }, '');
+            servicesMap[namespace] = serviceFileContent;
+        });
+    }
+
+    importAll(require.context('../services/', true, /\/(.*?)\/api\.json$/));
+}
+
+export default { dataTypesMap, enumsMap, servicesMap };

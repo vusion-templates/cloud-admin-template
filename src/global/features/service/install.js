@@ -1,13 +1,18 @@
-import services from '../../services';
+import { createService } from '@/global/features/service/create';
+import isPlainObject from 'lodash/isPlainObject';
 
 export default {
     install(Vue, options = {}) {
-        console.log('services refactory', services);
+        const services = options.servicesMap;
         const keys = Object.keys(services);
         if (Vue.prototype.$services) {
             keys.forEach((key) => {
                 if (Vue.prototype.$services[key]) {
                     throw new Error('services repeat:' + key);
+                }
+                const service = services[key];
+                if (isPlainObject(service)) {
+                    services[key] = createService(service);
                 }
             });
         }
