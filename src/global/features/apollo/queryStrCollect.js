@@ -10,7 +10,7 @@ function getUriValue(schemaRef = '') {
 
 /* eslint-disable no-underscore-dangle */
 export default {
-    install(Vue) {
+    install(Vue, options) {
         Object.defineProperty(Vue.prototype, '$graphql', {
             get() {
                 return {
