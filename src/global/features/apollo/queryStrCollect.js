@@ -43,7 +43,6 @@ export default {
                                 uri: getUriValue(schemaRef),
                             },
                         }).then((res) => {
-                            console.log(res);
                             return res.data && res.data[operationName];
                         });
                     },

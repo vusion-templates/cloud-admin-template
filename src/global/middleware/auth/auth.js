@@ -13,7 +13,8 @@ export const loginAuth = function (to, from, next, appConfig, item) {
             next();
         else
             throw new Error('Unauthorized');
-    }).catch(() => {
+    }).catch((e) => {
+        console.error('Auth', e);
         authOptions.tipMessage && Vue.prototype.$toast.show(authOptions.tipMessage);
         const unauthorized = typeof authOptions.unauthorized === 'function' ? authOptions.unauthorized(to) : authOptions.unauthorized;
         const unauthorizedPath = (unauthorized || '').split('?')[0];

@@ -3,7 +3,7 @@ import isPlainObject from 'lodash/isPlainObject';
 
 export default {
     install(Vue, options = {}) {
-        const services = options.servicesMap;
+        const services = Object.assign({}, options.servicesMap);
         const keys = Object.keys(services);
         if (Vue.prototype.$services) {
             keys.forEach((key) => {
