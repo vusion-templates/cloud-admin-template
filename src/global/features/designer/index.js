@@ -15,12 +15,16 @@ import { initMiddleware } from '@/global/middleware';
 import { apolloProvider } from '@/global/features/apollo';
 import installApollo from '@/global/features/apollo/queryStrCollect';
 import originMetaData from '@/global/metaData';
+import { runAhead } from '@/global/features/router/auth';
 
 window.appVue = Vue;
 export default {
     initRouter,
-    init(appConfig, platformConfig, rootRoute, metaData = originMetaData) {
+    async init(appConfig, platformConfig, rootRoute, metaData = originMetaData) {
         window.appInfo = Object.assign(appConfig, platformConfig);
+        if (appConfig.auth) {
+            await runAhead(appConfig.domainName);
+        }
         initMiddleware(appConfig);
         const genRouter = initRouter(appConfig, rootRoute);
 
