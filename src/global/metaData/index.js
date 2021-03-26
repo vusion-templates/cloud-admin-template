@@ -54,7 +54,7 @@ const servicesMap = {};
 }
 {
     function importAll(r) {
-        r.keys().forEach((key) => Object.assign(servicesMap, r(key)));
+        r.keys().forEach((key) => Object.assign(servicesMap, { _custom: r(key) }));
     }
     importAll(require.context('./', true, /\/apis.json$/));
 }
