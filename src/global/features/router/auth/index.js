@@ -75,5 +75,5 @@ const auth = {
 export default auth;
 
 export const runAhead = function (domainName, times) {
-    auth.init(domainName, times);
+    return auth.init(domainName, times);
 };
